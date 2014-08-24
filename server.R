@@ -10,7 +10,7 @@ Wage = subset(Wage, select=-c(logwage))
 
 xnames <- names(Wage)
 xnames <- xnames[which(xnames!="wage" & xnames!="logwage")]
-dnames <- xnames[which(xnames!="age" & xnames!="logwage")]
+dnames <- xnames[which(xnames!="age")]
 
 inTrain <- createDataPartition(y=Wage$wage, p=0.7, list=FALSE)
 training <- Wage[inTrain,]
@@ -36,7 +36,8 @@ shinyServer(
           if (input$y == 'age')
           {
             cutAge <- cut2(training$age, g=5)
-            qplot(training$wage, color=factor(cutAge), geom="density") +
+            qplot(training$wage, color=factor(cutAge), geom="density",
+                  xlab="wage", ylab="density", main="Density Plot") +
               labs(color=input$y)
           }
           else
